@@ -5,7 +5,7 @@ import pefile
 import binascii
 
 binary_filename="malo.bin"
-iconsdirectory = 'testicons'
+iconsdirectory = 'MSOicons'
 
 def read_content(fname):
   #open handle to read file bytes

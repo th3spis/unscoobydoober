@@ -13,7 +13,6 @@ def read_content(fname):
   f = open(fname, "rb")
   #read file bytes
   file_content=f.read()
-  #print(file_content)
   f.close()
   return file_content
 
@@ -30,6 +29,7 @@ def icon_checker(rsc_data, icons_directory):
           print("Found PE file with MS-Office Icon.")
           return True
 
+        
 #Get the icons from the resources section of the PE file
 #(mostly from the pe module documentation (for string objects in resources))
 def binary_digger(pe_bin):
@@ -39,10 +39,9 @@ def binary_digger(pe_bin):
   rt_icon_idx = [
     entry.id for entry in 
     pe.DIRECTORY_ENTRY_RESOURCE.entries].index(pefile.RESOURCE_TYPE['RT_ICON'])
-
   # Get the icon directory entries of PE file
   rt_icon_directory = pe.DIRECTORY_ENTRY_RESOURCE.entries[rt_icon_idx]
-  print("Found " + str(len(rt_icon_directory.directory.entries)) + " icon directory entries in file " + pe_bin + ".\n")
+  print("Found " + str(len(rt_icon_directory.directory.entries)) + " icon directory entries in file " + pe_bin + " resources section.\n")
   # For each of the entries (which will each contain a block of 16 icons)
   i=0
   for entry in rt_icon_directory.directory.entries:
@@ -54,6 +53,7 @@ def binary_digger(pe_bin):
     print("\tChecking icon " + str(i) + " in resources.\n")
     iconfound=icon_checker(data, iconsdirectory)
     if(iconfound):
+      print("Icon offset: " + str(hex(data_rva)))
       break
     i=i+1
 

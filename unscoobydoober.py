@@ -3,8 +3,9 @@
 import os
 import pefile
 import binascii
+import sys
 
-binary_filename="malo.bin"
+binary_filename=sys.argv[1]
 iconsdirectory = 'MSOicons'
 
 def read_content(fname):
@@ -26,7 +27,7 @@ def icon_checker(rsc_data, icons_directory):
         icon_data=read_content(icon_path)
         #Look for current icon in the given resource data
         if(rsc_data in icon_data):
-          print("Found PE file wirh MS-Office Icon.")
+          print("Found PE file with MS-Office Icon.")
           return True
 
 #Get the icons from the resources section of the PE file
